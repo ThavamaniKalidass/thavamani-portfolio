@@ -18,7 +18,7 @@
       --card-shadow: 0 18px 60px rgba(2,6,23,0.18);
       --nav-height: 76px;
       --ease: cubic-bezier(.2,.9,.2,1);
-      --bg-logo-opacity: 0.20; /* change this to increase/decrease logo visibility */
+      --bg-logo-opacity: 0.20;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -93,7 +93,7 @@
     /* BACKGROUND LOGOS */
     .bg-logos {
       position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
-      mix-blend-mode:normal; /* keeps logos subtle against background */
+      mix-blend-mode:normal;
     }
     .bg-logo{
       position:absolute; width:180px; height:180px; display:grid; place-items:center; border-radius:18px;
@@ -103,7 +103,6 @@
     }
     .bg-logo svg { width:75%; height:75%; display:block }
 
-    /* staggered motion */
     @keyframes floaty {
       0% { transform: translateY(0) rotate(0deg) }
       50% { transform: translateY(-26px) rotate(6deg) }
@@ -111,32 +110,29 @@
     }
     @keyframes slow-spin { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }
 
-    /* specific small variants for personality */
     .bg-logo.x1 { left:6%; top:18%; animation: floaty 9s ease-in-out infinite; }
     .bg-logo.x2 { right:8%; top:12%; animation: floaty 11s ease-in-out infinite; }
     .bg-logo.x3 { left:18%; bottom:12%; animation: floaty 10s ease-in-out infinite; }
     .bg-logo.x4 { right:20%; bottom:18%; animation: floaty 13s ease-in-out infinite; }
     .bg-logo.x5 { left:48%; top:6%; animation: floaty 12s ease-in-out infinite; }
 
-    /* make logos slightly larger on wide screens */
     @media(min-width:1200px){ .bg-logo{ width:220px; height:220px } }
 
     .wrap { max-width:var(--container); margin:36px auto; padding:0 22px; position:relative; z-index:2 }
 
     /* NAV (fixed full-width overlay) */
     nav{
-      position:fixed; /* fixed to viewport */
-      top:12px; /* distance from top */
+      position:fixed;
+      top:12px;
       left:0;
       width:100%;
-      z-index:1400; /* raised so it's in front */
+      z-index:1400;
       display:flex;
       justify-content:center;
       pointer-events:auto;
       transition:all .28s var(--ease);
     }
 
-    /* nav pill constrained and centered but nav itself is full width */
     .nav-pill{
       background:transparent; border-radius:44px; padding:10px 14px; display:flex; gap:18px; align-items:center; transition:all .28s var(--ease);
       backdrop-filter: blur(0px);
@@ -147,7 +143,6 @@
       justify-content:center;
     }
 
-    /* when we add .nav-overlay the pill gets a soft translucent background and shadow */
     .nav-overlay .nav-pill{
       background: rgba(255,255,255,0.86);
       box-shadow:0 12px 40px rgba(2,6,23,0.06);
@@ -184,7 +179,7 @@
       transform:translateY(-1px);
       animation: blink 1s steps(2, start) infinite;
     }
-    .subtitle.light::after{ background: #fff } /* for dark backgrounds */
+    .subtitle.light::after{ background: #fff }
     @keyframes blink { 50% { opacity:0 } }
 
     p.lead{color:#555;max-width:720px}
@@ -211,8 +206,24 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.18);
     }
 
-    .social-row{margin-top:20px;display:flex;gap:12px}
-    .social-row a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3f4f6;text-decoration:none;color:#111}
+    /* SOCIAL ROW & HOVER EFFECT */
+    .social-row{margin-top:20px;display:flex;gap:12px;justify-content:flex-start;align-items:center}
+    .social-row a{
+      width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3f4f6;text-decoration:none;color:#111;transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), color .22s var(--ease);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+      border:1px solid rgba(0,0,0,0.04);
+    }
+    .social-row a:focus { outline: 3px solid rgba(0,230,239,0.12); }
+    .social-row a:hover, .social-row a:focus {
+      transform: translateY(-6px) scale(1.06);
+      box-shadow: 0 20px 40px rgba(2,6,23,0.12);
+      background: linear-gradient(180deg, rgba(0,230,239,0.12), rgba(0,230,239,0.04));
+      color: var(--accent);
+      border-color: rgba(0,230,239,0.14);
+    }
+    /* slightly larger icons on hover for emphasis */
+    .social-row a i { transition: transform .18s var(--ease); }
+    .social-row a:hover i { transform: scale(1.12) translateY(-1px); }
 
     /* RIGHT COLUMN / CARD */
     .right-col{display:flex;flex-direction:column;align-items:center;gap:20px}
@@ -230,10 +241,8 @@
     .section{padding:80px 0}
     .section-title{ font-family:"Playfair Display"; font-size:36px; text-align:center; margin-bottom:12px }
 
-    /* Make sure each section scrolls to just below the nav */
     section[id] { scroll-margin-top: calc(var(--nav-height) + 18px); }
 
-    /* ABOUT: center content horizontally and constrain card widths */
     #about .about-grid{ grid-template-columns:1fr !important; justify-items:center; text-align:center; }
     #about .cards-row { justify-content:center; }
     #about .info-card { width:100%; max-width:540px; }
@@ -243,7 +252,7 @@
     .info-card{flex:1;border:2px solid #eee;background:#fff;padding:18px;border-radius:12px;box-shadow:0 12px 36px rgba(2,6,23,0.04)}
     .info-card h4{margin:4px 0 6px}
 
-    /* ================== PROJECTS: hover animation (merged) ================== */
+    /* PROJECTS hover animation (merged) */
     .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;margin-top:30px;padding:6px}
     .project-box{
       position:relative;
@@ -258,7 +267,6 @@
       outline: none;
     }
 
-    /* image container ensures consistent aspect ratio and GPU-accelerated transforms */
     .project-box .media{
       display:block;
       overflow:hidden;
@@ -275,7 +283,6 @@
       will-change:transform;
     }
 
-    /* info panel */
     .project-box .p-info{
       padding:14px;
       transition:transform .36s var(--ease), opacity .36s var(--ease);
@@ -284,7 +291,6 @@
     .p-info h4{margin:0 0 6px;font-size:18px}
     .p-info p{margin:0;color:#666;font-size:14px}
 
-    /* overlay fade */
     .project-box::after{
       content:"";
       position:absolute; inset:0;
@@ -294,7 +300,6 @@
       pointer-events:none;
     }
 
-    /* center action buttons */
     .project-actions{
       position:absolute;
       left:50%;
@@ -321,7 +326,6 @@
       align-items:center;
     }
 
-    /* hover / focus states */
     .project-box:hover, .project-box:focus-within{
       transform:translateY(-10px) scale(1.02);
       box-shadow:0 30px 80px rgba(2,6,23,0.12);
@@ -334,10 +338,8 @@
       opacity:1; pointer-events:auto; transform:translate(-50%,-50%) translateY(-6px);
     }
 
-    /* focus visible outline for keyboard */
     .project-box:focus-within { box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 4px rgba(0,230,239,0.08) inset; }
 
-    /* reduced motion: disable tilt/zoom */
     @media (prefers-reduced-motion: reduce){
       .project-box, .project-box .media img, .project-actions { transition: none !important; }
       .project-box:hover, .project-box:focus-within { transform: none; box-shadow:0 12px 36px rgba(2,6,23,0.06); }
@@ -358,31 +360,24 @@
 
     .up{position:fixed;right:24px;bottom:24px;width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(90deg,#6f5bff,#5b7bff);color:#fff;cursor:pointer;box-shadow:0 12px 40px rgba(91,123,255,0.18);z-index:90}
 
-    /* Generic hidden state for animated elements (default) */
     [data-anim] { opacity:0; transform: translateY(18px) scale(0.995); transition: opacity .52s var(--ease), transform .52s var(--ease); will-change:opacity,transform; }
 
-    /* Visible final state (used together with direction classes below) */
     [data-anim].in { opacity:1; transform: none; }
 
-    /* Direction-based entrance classes */
     .enter-from-bottom { opacity:1; transform: translateY(0) scale(1); }
     .enter-from-top    { opacity:1; transform: translateY(0) scale(1); }
 
-    /* Exit states (applied when leaving viewport) */
     .exit-to-top    { opacity:0; transform: translateY(-22px) scale(0.995); }
     .exit-to-bottom { opacity:0; transform: translateY(22px) scale(0.995); }
 
-    /* reveal specifics */
     [data-anim="reveal"] { position:relative; overflow:hidden; }
     [data-anim="reveal"] .reveal-inner { transform: translateY(18px); transition: transform .6s var(--ease); }
     [data-anim="reveal"].in .reveal-inner { transform: none; }
 
-    /* small helpers for stagger delays (JS applies inline style) */
     [data-anim][data-delay] { transition-delay: 0ms; }
 
     .muted { color:#777; font-size:14px }
 
-    /* education & skills helpers */
     .education-card{border-radius:12px;padding:18px;border:1px solid #eee;background:#fff;box-shadow:0 12px 36px rgba(2,6,23,0.04)}
     .skill-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px}
     .skill-pill{padding:8px 12px;border-radius:999px;border:1px solid #eee;font-weight:700;background:#fff}
@@ -400,7 +395,7 @@
       .hero-avatar{width:260px;height:260px}
     }
 
-    /* ========== Certificate lightbox styles ========== */
+    /* Certificate lightbox styles */
     .cert-modal {
       position: fixed;
       inset: 0;
@@ -559,7 +554,6 @@
         <a href="#home" class="nav-link active" data-target="home"><i class="fa-solid fa-house"></i> Home</a>
         <a href="#about" class="nav-link" data-target="about"><i class="fa-regular fa-address-card"></i> About</a>
         <a href="#education" class="nav-link" data-target="education"><i class="fa-solid fa-graduation-cap"></i> Education</a>
-        <!-- INTERNSHIPS nav item -->
         <a href="#internship" class="nav-link" data-target="internship"><i class="fa-solid fa-briefcase"></i> Internship</a>
         <a href="#skills" class="nav-link" data-target="skills"><i class="fa-solid fa-chart-simple"></i> Skills</a>
         <a href="#projects" class="nav-link" data-target="projects"><i class="fa-regular fa-folder"></i> Projects</a>
@@ -583,14 +577,15 @@
 
             <div class="hero-cta" data-anim="fade-up" data-delay="360">
               <a class="btn btn-primary" href="#contact"><i class="fa-solid fa-paper-plane"></i> Hire Me</a>
-              <a class="btn btn-outline" href="cv/Thavamani_CV.pdf" download="Thavamani_CV.pdf" aria-label="Download CV"><i class="fa-solid fa-download"></i> Download CV</a>
+              <a class="btn btn-outline" href="images/THAVAMANI_K___Resume_ (2).pdf" download="Thavamani_Resume.pdf" aria-label="Thavamani_CV.pdf"><i class="fa-solid fa-download"></i> Download Resume</a>
             </div>
 
             <div class="social-row" style="margin-top:18px" data-anim="fade-up" data-delay="480">
-              <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-              <a href="#" aria-label="CodePen"><i class="fa-brands fa-codepen"></i></a>
-              <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-              <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://github.com/ThavamaniKalidass" aria-label="GitHub" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/thavamanik2108/" aria-label="LinkedIn" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://mail.google.com/mail/?view=cm&to=thavamanikalidass@gmail.com" target="_blank">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
             </div>
           </div>
 
@@ -782,7 +777,6 @@
               <div class="skill-pill">React (Basics)</div>
             </div>
 
-            <!-- optional skill bars (simple) -->
             <div style="margin-top:22px;max-width:720px;margin-left:auto;margin-right:auto" data-anim="fade-up" data-delay="280">
               <div style="margin-bottom:10px">
                 <div class="muted" style="display:flex;justify-content:space-between"><span>Java</span><span>Expert</span></div>
@@ -816,8 +810,8 @@
                 <img src="images/Screenshot (161).png" alt="Portfolio Website preview">
               </div>
               <div class="project-actions" aria-hidden="true">
-                <a href="#" aria-label="View Portfolio project"><i class="fa-solid fa-eye"></i> View</a>
-                <a href="#" aria-label="Open demo for Portfolio project"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+                <a href="#" aria-label="View Portfolio project"> </a>
+                <a href="#" aria-label="Open demo for Portfolio project"></a>
               </div>
               <div class="p-info">
                 <h4>Portfolio Website</h4>
@@ -831,8 +825,8 @@
                 <img src="images/original-423d781d748f6f658adb5db64c8cfb1c.webp" alt="Task Manager preview">
               </div>
               <div class="project-actions" aria-hidden="true">
-                <a href="#" aria-label="View Task Manager project"><i class="fa-solid fa-eye"></i> View</a>
-                <a href="#" aria-label="Open demo for Task Manager project"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+                <a href="#" aria-label="View Task Manager project"></a>
+                <a href="#" aria-label="Open demo for Task Manager project"> </a>
               </div>
               <div class="p-info">
                 <h4>Task Manager App</h4>
@@ -846,8 +840,8 @@
                 <img src="images/pro-demo-51.jpg" alt="E-Commerce demo preview">
               </div>
               <div class="project-actions" aria-hidden="true">
-                <a href="#" aria-label="View E-Commerce project"><i class="fa-solid fa-eye"></i> View</a>
-                <a href="#" aria-label="Open demo for E-Commerce project"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+                <a href="#" aria-label="View E-Commerce project"> </a>
+                <a href="#" aria-label="Open demo for E-Commerce project"> </a>
               </div>
               <div class="p-info">
                 <h4>E-Commerce Demo</h4>
@@ -886,14 +880,15 @@
           <div class="contact-grid">
             <div data-anim="slide-left" data-delay="160">
               <p>Feel free to get in touch for collaborations or freelance work.</p>
-              <p><i class="fa-regular fa-envelope"></i> thavamanikalidass@gmail.com</p>
+              <p><i class="fa-regular fa-envelope" ></i> <a style="text-decoration: none; color: #000;" href="mailto:thavamanikalidass@gmail.com">thavamanikalidass@gmail.com</a></p>
               <p><i class="fa-solid fa-phone"></i> +91 9345994347</p>
               <p><i class="fa-solid fa-location-dot"></i> Chennai, Tamilnadu</p>
             </div>
-            <form onsubmit="return sendMessage(event)" data-anim="slide-right" data-delay="220">
-              <input class="form-field" name="name" placeholder="Your Name" required />
-              <input class="form-field" name="email" type="email" placeholder="Your Email" required />
-              <textarea class="form-field" name="message" rows="5" placeholder="Your Message" required></textarea>
+            <form id="contactForm" onsubmit="return sendMessage(event)" data-anim="slide-right" data-delay="220">
+              <input class="form-field" name="name" id="name" placeholder="Your Name" required />
+              <input class="form-field" name="email" id="email" type="email" placeholder="Your Email" required />
+              <input class="form-field" name="subject" id="subject" placeholder="Subject (optional)" />
+              <textarea class="form-field" name="message" id="message" rows="5" placeholder="Your Message" required></textarea>
               <button class="btn-send" type="submit"><i class="fa-solid fa-paper-plane"></i> Send</button>
             </form>
           </div>
@@ -902,7 +897,7 @@
 
       <div class="up" id="btnUp" title="Scroll to top" aria-hidden="true"><i class="fa-solid fa-angle-up"></i></div>
 
-      <footer>
+      <!-- <footer>
         <div class="wrap" style="text-align:center">
           <div class="social-row" style="margin-top:12px; margin-left: 450px; " >
             <a href="#"><i class="fa-brands fa-github"></i></a>
@@ -911,7 +906,7 @@
           </div>
           <small style="display:block;margin-top:10px;color:#bdbdbd">© Designed By Thavamani (Java Full-Stack)</small>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </div>
 
@@ -934,6 +929,12 @@
     // --- CONFIG: adjust intro duration if needed (ms) ---
     const INTRO_DURATION = 800; // ms
 
+    // EmailJS placeholders — set to true + fill values if you want direct sending
+    const EMAILJS_ENABLED = false; // set to true after replacing the IDs below
+    const EMAILJS_SERVICE_ID = 'your_service_id';
+    const EMAILJS_TEMPLATE_ID = 'your_template_id';
+    const EMAILJS_USER_ID = 'your_public_key_or_user_id';
+
     const splash = document.getElementById('splash');
     const site = document.getElementById('site');
     let splashTimeout;
@@ -941,12 +942,10 @@
     window.addEventListener('load', () => {
       splashTimeout = setTimeout(showSite, INTRO_DURATION);
 
-      // small staggered transforms for bg-logos to reduce repetition
       document.querySelectorAll('.bg-logo').forEach((el, i) => {
         const delay = (i * 180) + 200;
         el.style.animationDelay = `${(i * 0.25).toFixed(2)}s`;
         el.style.transitionDelay = `${delay}ms`;
-        // small random horizontal drift so positions feel organic
         const drift = (Math.random() * 14) - 7;
         el.style.transform = `translateX(${drift}px)`;
       });
@@ -960,12 +959,10 @@
       revealInitialInView();
       checkUp();
 
-      // gently fade-in the bg logos once the site is visible
       document.querySelectorAll('.bg-logo').forEach((g, i) => {
         setTimeout(() => { g.style.opacity = getComputedStyle(document.documentElement).getPropertyValue('--bg-logo-opacity') || 0.06 }, i * 90);
       });
 
-      // ensure nav initial state is correct
       updateNavOverlay();
     }
 
@@ -979,22 +976,122 @@
       if (['Enter',' ','Escape'].includes(e.key)) skipIntro();
     });
 
-    // --- SEND MESSAGE (demo) ---
+    /* ------------------ Toast Helper ------------------ */
+    function showToast(message, timeout = 3800) {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        Object.assign(container.style, {
+          position: 'fixed',
+          right: '20px',
+          bottom: '20px',
+          zIndex: 99999,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          alignItems: 'flex-end',
+          pointerEvents: 'none'
+        });
+        document.body.appendChild(container);
+      }
+
+      const t = document.createElement('div');
+      t.textContent = message;
+      Object.assign(t.style, {
+        background: 'rgba(17,17,17,0.95)',
+        color: '#fff',
+        padding: '10px 14px',
+        borderRadius: '10px',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.18)',
+        fontSize: '14px',
+        pointerEvents: 'auto',
+        maxWidth: '360px',
+        opacity: '1',
+        transform: 'translateY(0)'
+      });
+
+      container.appendChild(t);
+      setTimeout(() => {
+        t.style.transition = 'opacity .25s ease, transform .25s ease';
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(8px)';
+        setTimeout(() => t.remove(), 300);
+      }, timeout);
+    }
+
+    /* ================== SEND MESSAGE ==================
+       Behavior:
+         1) If EMAILJS_ENABLED === true (and you provide IDs), the form will send via EmailJS.
+         2) Otherwise it will open the user's email client via mailto: (non-blocking toast + window.open fallback).
+    ================================================== */
     function sendMessage(e){
       e.preventDefault();
-      const form = e.target;
-      const name = form.name.value.trim();
-      if(!name){ alert('Please fill all fields.'); return false; }
-      alert(`Thanks ${name}! (Demo message)`); 
-      form.reset();
+      const form = document.getElementById('contactForm');
+      const name = (document.getElementById('name') || {}).value?.trim();
+      const email = (document.getElementById('email') || {}).value?.trim();
+      const subject = (document.getElementById('subject') || {}).value?.trim() || 'Portfolio contact';
+      const message = (document.getElementById('message') || {}).value?.trim();
+
+      if(!name || !email || !message){
+        showToast('Please fill Name, Email and Message.');
+        return false;
+      }
+
+      // If EmailJS is enabled and available, attempt to send via EmailJS
+      if (EMAILJS_ENABLED && window.emailjs) {
+        const templateParams = {
+          from_name: name,
+          from_email: email,
+          to_email: 'thavamanikalidass@gmail.com',
+          subject: subject,
+          message: message
+        };
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
+          .then(() => {
+            showToast('Message sent — thanks! I will reply soon.');
+            form.reset();
+          }, (err) => {
+            console.error('EmailJS error', err);
+            showToast('Sending failed via EmailJS. Opening email client instead.');
+            openMailClientFallback(name, email, subject, message);
+          });
+        return false;
+      }
+
+      // Fallback: open user's email client (non-blocking)
+      openMailClientFallback(name, email, subject, message);
       return false;
     }
     window.sendMessage = sendMessage;
 
-    /* =============================================================
-       Scroll-direction-aware animation system
-    ============================================================= */
+    /* non-blocking mailto fallback using window.open + graceful fallback */
+    function openMailClientFallback(name, email, subject, message) {
+      const to = 'thavamanikalidass@gmail.com';
+      const body = `Name: ${name}\r\nEmail: ${email}\r\n\r\n${message}`;
+      const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
+      // Try to open default mail client in a new tab/window
+      // window.open is less likely to produce a blocking behavior than alert()
+      let opened = null;
+      try {
+        opened = window.open(mailto, '_blank');
+      } catch (err) {
+        opened = null;
+      }
+
+      if (opened) {
+        showToast('Mail client should open in a new tab. If nothing happens, check your OS/browser mail settings.');
+      } else {
+        // Popups may be blocked — navigate as last resort
+        window.location.href = mailto;
+        showToast('Opening your mail client. If nothing happens, copy the message and send manually.');
+      }
+    }
+
+    /* =============================================================
+       Scroll-direction-aware animation system (unchanged logic)
+    ============================================================= */
     (function(){
       let lastScrollY = window.scrollY || 0;
       let lastDirection = 'down';
@@ -1072,7 +1169,7 @@
       window.revealInitialInView = revealInitialInView;
     })();
 
-    // nav highlight & smooth scroll (updated to include certificates)
+    // nav highlight & smooth scroll (unchanged)
     (function(){
       const sectionIds = ['home','about','education','internship','skills','projects','certificates','services','contact'];
       const navLinks = Array.from(document.querySelectorAll('.nav-link'));
@@ -1081,7 +1178,6 @@
           if (entry.isIntersecting) {
             const id = entry.target.id;
             navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-target') === id));
-            // update URL hash without adding history entries
             history.replaceState(null, '', `#${id}`);
           }
         });
@@ -1092,7 +1188,6 @@
         if (el) sectionObserver.observe(el);
       });
 
-      // improved click handler: account for fixed nav height so section appears below nav
       navLinks.forEach(a => {
         a.addEventListener('click', (ev) => {
           ev.preventDefault();
@@ -1101,7 +1196,7 @@
           if (t) {
             const nav = document.getElementById('primaryNav');
             const navHeight = nav ? nav.offsetHeight : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 76;
-            const extraSpacing = 8; // small breathing room
+            const extraSpacing = 8;
             const top = t.getBoundingClientRect().top + window.scrollY - navHeight - extraSpacing;
             window.scrollTo({ top, behavior: 'smooth' });
           }
@@ -1212,7 +1307,7 @@
       const nav = document.getElementById('primaryNav');
       if (!nav) return;
       if (window.scrollY > 12) nav.classList.add('nav-overlay');
-      else nav.classList.add('nav-overlay'); // keep overlay by default (your original approach)
+      else nav.classList.add('nav-overlay');
     }
 
     // ensure reveal when resizing
@@ -1236,9 +1331,7 @@
         downloadEl.setAttribute('download', download ? download.split('/').pop() : '');
         modal.setAttribute('aria-hidden', 'false');
         modal.style.display = 'flex';
-        // focus to modal for accessibility
         modal.focus();
-        // prevent background scroll
         document.body.style.overflow = 'hidden';
       }
 
@@ -1250,7 +1343,6 @@
         document.body.style.overflow = '';
       }
 
-      // open from an element with data attributes
       window.openCertificateFromElem = function(el) {
         const src = el.getAttribute('data-cert-src') || el.getAttribute('src') || el.dataset.src;
         const title = el.getAttribute('data-cert-title') || el.alt || 'Certificate';
@@ -1258,22 +1350,18 @@
         openCertificate({ src, title, download });
       };
 
-      // events
       if (backdrop) backdrop.addEventListener('click', closeCertificate);
       if (closeBtn) closeBtn.addEventListener('click', closeCertificate);
 
-      // keyboard: Esc to close
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           if(modal && modal.getAttribute('aria-hidden') === 'false') closeCertificate();
         }
       });
 
-      // make thumbnails with .cert-thumb clickable if present
       document.addEventListener('click', (e) => {
         const t = e.target.closest('.cert-thumb');
         if (t) {
-          // If image uses attributes, call openCertificateFromElem
           openCertificateFromElem(t);
         }
       });
@@ -1282,7 +1370,7 @@
     /* ================== Projects hover tilt interaction ================== */
     (function(){
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) return; // skip interactive tilt for accessibility
+      if (prefersReduced) return;
 
       const cards = document.querySelectorAll('.project-box[data-tilt]');
 
@@ -1296,13 +1384,11 @@
 
         card.addEventListener('mousemove', (e) => {
           if (!rect) updateRect();
-          const x = (e.clientX - rect.left) / rect.width; // 0..1
-          const y = (e.clientY - rect.top) / rect.height; // 0..1
-          const rx = -(y - 0.5) * strength; // rotateX
-          const ry = (x - 0.5) * strength;  // rotateY
-          // apply perspective and tilt + subtle lift
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          const rx = -(y - 0.5) * strength;
+          const ry = (x - 0.5) * strength;
           card.style.transform = `perspective(900px) translateY(-6px) scale(1.02) rotateX(${rx}deg) rotateY(${ry}deg)`;
-          // subtle parallax on image
           const img = card.querySelector('.media img');
           if(img) img.style.transform = `scale(1.14) translateX(${(x-0.5)*12}px) translateY(${(y-0.5)*8}px)`;
         });
@@ -1312,11 +1398,16 @@
           const img = card.querySelector('.media img'); if(img) img.style.transform = '';
         });
 
-        // keyboard focus makes card lift (no tilt)
         card.addEventListener('focus', () => { card.style.transform = 'translateY(-10px) scale(1.02)'; });
         card.addEventListener('blur', () => { card.style.transform = ''; });
       });
     })();
   </script>
+
+  <!-- If you enable EmailJS client mode, add the EmailJS SDK here:
+       <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+       Then init with: emailjs.init('your_public_key_or_user_id');
+       (And set EMAILJS_ENABLED = true and supply service/template IDs above.)
+  -->
 </body>
 </html>
